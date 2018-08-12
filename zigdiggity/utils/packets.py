@@ -42,7 +42,9 @@ def add_to_datasource(packet, datasource, channel, ignore_seqnums=[], ignore_pan
     # Once we have the network key, there are some nice attacks that require the counters
     if network_key is not None:
         # Attempt to store any sequence numbers seen
-        extract_and_save_sequence_numbers(packet, datasource, network_key)
+        # Commented out because of stability problems.
+        # extract_and_save_sequence_numbers(packet, datasource, network_key)
+        pass
 
 def extract_and_save_sequence_numbers(packet, datasource, network_key):
 
