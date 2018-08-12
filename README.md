@@ -1,6 +1,6 @@
 # ZigDiggity
 
-*ZigDiggity* is a Zigbee hacking toolkit designed to introduce previously unpublished attack patterns and make general overall testing a bit easier. The project introduces two new attack patterns:
+*ZigDiggity* is a Zigbee hacking toolkit designed to introduce previously unpublished attack patterns and make testing a bit easier. The project introduces two new attack patterns:
 
 * The *Ack Attack* - An ackowledgement-based attack meant to attempt Zigbee endpoint devices to malfunction.
 * The *Rejoin Blackhole Attack* - A method of replying to request beacons to force endpoint devices to try to connect to a user-specified PAN ID.
@@ -27,7 +27,7 @@ ZigDiggity attempts to avoid the excessive use of command-line arguments, especi
 zigdig_ackattack
 ```
 
-The scr ipt will prompt for any data needed as it runs.
+The script will prompt for any data needed as it runs.
 
 ## Tools
 
