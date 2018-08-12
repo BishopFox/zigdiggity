@@ -1,0 +1,10 @@
+#!/usr/bin/python
+
+from zigdiggity.datastore import database_session
+from zigdiggity.datastore.networks import Network
+from zigdiggity.datastore.devices import Device
+
+for device in database_session.query(Device).all():
+    database_session.delete(device)
+
+database_session.commit()

