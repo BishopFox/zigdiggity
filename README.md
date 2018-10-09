@@ -1,3 +1,5 @@
+![ZigDiggity - Logo](images/ZigDiggity-DEMO-LateNight-07Aug2018-PHOTOS-5a-PlusLogo.jpg)
+
 # ZigDiggity
 
 *ZigDiggity* is a Zigbee hacking toolkit designed to introduce previously unpublished attack patterns and make testing a bit easier. The project introduces two new attack patterns:
