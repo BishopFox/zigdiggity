@@ -2,6 +2,8 @@
 
 # ZigDiggity
 
+Introducing ZigDiggity, an entire suite of new ZigBee penetration testing tools, created by Francis Brown and Matthew Gleason of ![BishopFox-Home](https://www.bishopfox.com/ "Bishop Fox").
+
 *ZigDiggity* is a Zigbee hacking toolkit designed to introduce previously unpublished attack patterns and make testing a bit easier. The project introduces two new attack patterns:
 
 * The *Ack Attack* - An acknowledgement-based attack meant to attempt Zigbee endpoint devices to malfunction.
