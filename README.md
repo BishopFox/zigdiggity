@@ -4,7 +4,7 @@
 
 *ZigDiggity* is a Zigbee hacking toolkit designed to introduce previously unpublished attack patterns and make testing a bit easier. The project introduces two new attack patterns:
 
-* The *Ack Attack* - An ackowledgement-based attack meant to attempt Zigbee endpoint devices to malfunction.
+* The *Ack Attack* - An acknowledgement-based attack meant to attempt Zigbee endpoint devices to malfunction.
 * The *Rejoin Blackhole Attack* - A method of replying to request beacons to force endpoint devices to try to connect to a user-specified PAN ID.
 
 ## Installation
@@ -23,7 +23,7 @@ The current version of ZigDiggity is solely designed for use of KillerBee cards.
 
 ## Usage
 
-ZigDiggity attempts to avoid the excessive use of command-line arguments, especially those that are just big chuncks of hexidecimal data. An example usage for the ``zigdig_ackattack`` tools is as follows:
+ZigDiggity attempts to avoid the excessive use of command-line arguments, especially those that are just big chunks of hexadecimal data. An example usage for the ``zigdig_ackattack`` tools is as follows:
 
 ```
 zigdig_ackattack
@@ -47,7 +47,7 @@ The tools introduced in ZigDiggity come in two forms, one for performing the var
 ### Data Management Tools
 
 * *zigdig_cleardevices* - Clears the ZigDiggity device list
-* *zigdig_clearnetworks* - Clears the ZigDiggity network list, including any encrpytion keys captured during the script runs
+* *zigdig_clearnetworks* - Clears the ZigDiggity network list, including any encryption keys captured during the script runs
 * *zigdig_clearall* - Clears both the devices and networks.
 
 ## Notes
@@ -55,3 +55,12 @@ The tools introduced in ZigDiggity come in two forms, one for performing the var
 The patterns used by the ZigDiggity toolkit are _not_ 100% reliable. Each is designed to be used in a test setting in order to determine how devices respond to less than optimal conditions. As the radio technology get faster, many of these attack patterns should become more reliable.
 
 New tools are planned to be added as the reliability of the tools can be improved.
+
+## Black Hat USA 2018 - Tool Arsenal - ZigDiggity - 09 August 2018
+
+Special thanks to the Black Hat USA 2018 Tool Arsenal folks for having us out to demonstrate ZigDiggity on 09Aug2018.
+
+See link and photos:
+* [ZigDiggity: ZigBee Pentest Toolkit - Black Hat USA 2018 | Arsenal Schedule](https://www.blackhat.com/us-18/arsenal/schedule/index.html#zigdiggity-zigbee-pentest-toolkit-12110 "ZigDiggity: ZigBee Pentest Toolkit - Black Hat USA 2018 | Arsenal Schedule")
+	* ![ZigDiggity - BH2018 - Photo](images/BlackHat-2018-Arsenal-ZigDiggity-Booth-1-Smaller.jpg)
+	* ![ZigDiggity - BH2018 - Abstract](images/Abstract-Black_Hat-2018-Tool_Arsenal-CFP-ZigDiggity-Brown_Gleason.png)
