@@ -4,6 +4,7 @@ sys.path.append(os.getcwd() + "/zigdiggity")
 
 import time
 import signal
+import random
 import argparse
 from scapy.layers.dot15d4 import *
 from scapy.layers.zigbee import *
@@ -27,7 +28,7 @@ logo.print()
 hardware_radio = RaspbeeRadio("/dev/ttyS0")
 radio = ObserverRadio(hardware_radio)
 
-if arg.wireshark:
+if args.wireshark:
     wireshark = WiresharkObserver()
     radio.add_observer(wireshark)
 
