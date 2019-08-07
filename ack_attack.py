@@ -19,7 +19,7 @@ from zigdiggity.interface.components.logo import Logo
 parser = argparse.ArgumentParser(description='Perform an acknowledge attack against the target network')
 parser.add_argument('-c','--channel',action='store',type=int,dest='channel',required=True,help='Channel to use')
 parser.add_argument('-e','--epan',action='store',type=lambda s: int(s.replace(':',''),16),dest='epan',required=True,help='The Extended PAN ID of the network to target')
-parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=True,help='The Extended PAN ID of the network to target')
+parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=False,help='The Extended PAN ID of the network to target')
 args = parser.parse_args()
 
 logo = Logo()
