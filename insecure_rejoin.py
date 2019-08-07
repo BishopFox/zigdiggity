@@ -45,6 +45,8 @@ for channel in CHANNELS:
 
     for attempt in range(3):
         key = insecure_rejoin_by_panid(radio, panid, extended_src=0x01020304050607)
+        if key is not None:
+            break
 
 radio.off()
 print_notify("Total elapsed time: %f seconds" % (time.time()-start_time))
