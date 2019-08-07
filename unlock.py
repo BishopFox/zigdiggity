@@ -4,6 +4,7 @@ sys.path.append(os.getcwd() + "/zigdiggity")
 
 import time
 import argparse
+import struct
 from scapy.layers.dot15d4 import *
 from scapy.layers.zigbee import *
 

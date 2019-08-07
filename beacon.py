@@ -13,6 +13,7 @@ from zigdiggity.radios.observer_radio import ObserverRadio
 from zigdiggity.observers.wireshark_observer import WiresharkObserver
 from zigdiggity.packets.dot15d4 import beacon_request
 from zigdiggity.interface.console import print_notify
+from zigdiggity.misc.timer import Timer
 from zigdiggity.interface.components.logo import Logo
 
 parser = argparse.ArgumentParser(description='Send a beacon request')
@@ -35,7 +36,7 @@ CHANNEL = args.channel
 print_notify("Sending the beacon request")
 radio.send(beacon_request(random.randint(0,255)))
 
-timer = Timer(5):
+timer = Timer(5)
 while not timer.has_expired():
     radio.receive()
 
