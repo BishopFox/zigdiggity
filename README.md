@@ -1,6 +1,6 @@
 # ZigDiggity Version 2
 
-Introducing ZigDiggity, a ZigBee testing framework created by [Bishop Fox](https://www.bishopfox.com/ "Bishop Fox").
+Introducing *ZigDiggity*, a ZigBee testing framework created by [Bishop Fox](https://www.bishopfox.com/ "Bishop Fox").
 
 *ZigDiggity* version 2 is a major overhaul of the original package and aims to enable security auditors and developers to run complex interactions with ZigBee networks using a single device. 
 
