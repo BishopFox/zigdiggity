@@ -28,7 +28,7 @@ logo.print()
 hardware_radio = RaspbeeRadio("/dev/ttyS0")
 radio = ObserverRadio(hardware_radio)
 
-if arg.wireshark:
+if args.wireshark:
     wireshark = WiresharkObserver()
     radio.add_observer(wireshark)
 
