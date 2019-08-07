@@ -24,7 +24,7 @@ Using a default install of Raspbian, perform the following steps:
 
 ### Hardware
 
-The current version of ZigDiggity is solely designed for use of the [Raspbee](https://www.dresden-elektronik.de/funktechnik/solutions/wireless-light-control/raspbee/?L=1)
+The current version of ZigDiggity is solely designed for use with the [Raspbee](https://www.dresden-elektronik.de/funktechnik/solutions/wireless-light-control/raspbee/?L=1)
 
 ## Usage
 
