@@ -14,7 +14,7 @@ import zigdiggity.crypto.utils as crypto_utils
 from zigdiggity.misc.actions import *
 from zigdiggity.interface.components.logo import Logo
 
-parser = argparser.ArgumentParser(description='Attempt to unlock the target lock')
+parser = argparse.ArgumentParser(description='Attempt to unlock the target lock')
 parser.add_argument('-c','--channel',action='store',type=int,dest='channel',required=True,help='Channel to use')
 parser.add_argument('-e','--epan',action='store',type=lambda s: int(s.replace(':',''),16),dest='epan',required=True,help='The Extended PAN ID of the network to target')
 parser.add_argument('-a','--address',action='store',type=lambda s: int(s.replace(':',''),16),dest='address',required=True,help='The address of the device to target')
