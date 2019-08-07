@@ -19,7 +19,7 @@ parser.add_argument('-c','--channel',action='store',type=int,dest='channel',requ
 parser.add_argument('-e','--epan',action='store',type=lambda s: int(s.replace(':',''),16),dest='epan',required=True,help='The Extended PAN ID of the network to target')
 parser.add_argument('-a','--address',action='store',type=lambda s: int(s.replace(':',''),16),dest='address',required=True,help='The address of the device to target')
 parser.add_argument('-k','--key',action='store',type=lambda s: int(s.replace(':',''),16),dest='key',required=True,help='The network encryption key of the target network')
-parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=False,dest='wireshark',help='See all traffic in wireshark')
+parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=False,help='See all traffic in wireshark')
 args = parser.parse_args()
 
 logo = Logo()
