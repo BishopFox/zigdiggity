@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import sys
 
 class Color(object):
@@ -88,10 +85,4 @@ class Color(object):
     @staticmethod
     def oneliner(text):
         Color.p("\r%s" % text)
-
-if __name__ == '__main__':
-    Color.pl("{R}Testing{G}One{C}Two{P}Three{W}Done")
-    print(Color.s("{C}Testing{P}String{W}"))
-    Color.pl("{+} Good line")
-    Color.pl("{!} Danger")
 
