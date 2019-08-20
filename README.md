@@ -10,6 +10,8 @@ See 2019 Black Hat USA & DEF CON 27 links:
 * [Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019](https://www.blackhat.com/us-19/arsenal/schedule/index.html#arsenal-lab---zigbee-hacking-smarter-home-invasion-with-zigdiggity-17151 "Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019")
 * https://www.defcon.org/html/defcon-27/dc-27-demolabs.html#ZigDiggity
 
+* [YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019](https://www.youtube.com/watch?v=rM495gGRTYQ "YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019")
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=rM495gGRTYQ
 " target="_blank"><img src="http://img.youtube.com/vi/rM495gGRTYQ/0.jpg" 
 alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
