@@ -6,16 +6,20 @@ Introducing *ZigDiggity*, a ZigBee testing framework created by [Bishop Fox](htt
 
 *ZigDiggity* version 2 is a major overhaul of the original package and aims to enable security auditors and developers to run complex interactions with ZigBee networks using a single device. 
 
-See 2019 Black Hat USA & DEF CON 27 links:
+## 2019 - Black Hat USA 2019 & DEF CON 27 - links, slides, and videos
 * [Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019](https://www.blackhat.com/us-19/arsenal/schedule/index.html#arsenal-lab---zigbee-hacking-smarter-home-invasion-with-zigdiggity-17151 "Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019")
 * https://www.defcon.org/html/defcon-27/dc-27-demolabs.html#ZigDiggity
 
+### Videos
 * [YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019](https://www.youtube.com/watch?v=rM495gGRTYQ "YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019")
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=rM495gGRTYQ
 " target="_blank"><img src="http://img.youtube.com/vi/rM495gGRTYQ/0.jpg" 
 alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
 
+### Slides
+* https://www.slideshare.net/bishopfox/smarter-home-invasion-with-zigdiggity
+* https://www.bishopfox.com/files/slides/2019/Black_Hat_USA_2019-Zigbee_Hacking-Smarter_Home_Invasion_with_ZigDiggity-08Aug2019-Slides.pdf
 
 
 ## Installation
