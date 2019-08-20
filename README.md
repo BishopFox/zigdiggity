@@ -1,8 +1,20 @@
+![ZigDiggity - Logo](images/ZigDiggity-2019-Logo_and_Example-1.jpg)
+
 # ZigDiggity Version 2
 
 Introducing *ZigDiggity*, a ZigBee testing framework created by [Bishop Fox](https://www.bishopfox.com/ "Bishop Fox").
 
 *ZigDiggity* version 2 is a major overhaul of the original package and aims to enable security auditors and developers to run complex interactions with ZigBee networks using a single device. 
+
+See 2019 Black Hat USA & DEF CON 27 links:
+* [Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019](https://www.blackhat.com/us-19/arsenal/schedule/index.html#arsenal-lab---zigbee-hacking-smarter-home-invasion-with-zigdiggity-17151 "Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019")
+* https://www.defcon.org/html/defcon-27/dc-27-demolabs.html#ZigDiggity
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=rM495gGRTYQ
+" target="_blank"><img src="http://img.youtube.com/vi/rM495gGRTYQ/0.jpg" 
+alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
+
+
 
 ## Installation
 
@@ -25,6 +37,8 @@ Using a default install of Raspbian, perform the following steps:
 ### Hardware
 
 The current version of ZigDiggity is solely designed for use with the [Raspbee](https://www.dresden-elektronik.de/funktechnik/solutions/wireless-light-control/raspbee/?L=1)
+* https://www.amazon.com/RaspBee-premium-ZigBee-Raspberry-Firmware/dp/B00E6300DO
+	* ![ZigDiggity - RaspBee - Photo](images/RaspBee-image-2jpg)
 
 ## Usage
 
