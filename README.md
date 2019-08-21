@@ -2,7 +2,7 @@
 
 # ZigDiggity Version 2
 
-Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by Matt Gleason & Francis Brown of [Bishop Fox](https://www.bishopfox.com/ "Bishop Fox").
+Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by Matt Gleason & Francis Brown of [Bishop Fox](https://www.bishopfox.com/ "Bishop Fox").   Special thanks to Caleb Marion!
 
 *ZigDiggity* version 2 is a major overhaul of the original package and aims to enable cybersecurity professionals, auditors, and developers to run complex interactions with ZigBee networks using a single device. 
 
@@ -45,6 +45,11 @@ Using a default install of Raspbian, perform the following steps:
 The current version of ZigDiggity is solely designed for use with the [Raspbee](https://www.dresden-elektronik.de/funktechnik/solutions/wireless-light-control/raspbee/?L=1)
 * https://www.amazon.com/RaspBee-premium-ZigBee-Raspberry-Firmware/dp/B00E6300DO
 	* ![](images/RaspBee-image-2.jpg)
+* Raspberry Pi 3 B+
+	* https://www.amazon.com/CanaKit-Raspberry-Power-Supply-Listed/dp/B07BC6WH7V
+* RasPad by SunFounder (Optional) - great portable Zigbee hacking solution, tablet to house the RaspPi3 & RaspBee radio:
+	* https://www.amazon.com/SunFounder-RasPad-Built-Touchscreen-Compatible/dp/B07JG53K2W/
+		* ![ZigDiggity - RasPad - Photo](images/ZigDiggity-PortableRaspPiPad_w_Touchscreen-4a.jpg)
 
 ## Usage
 
