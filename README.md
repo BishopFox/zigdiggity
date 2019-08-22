@@ -12,6 +12,7 @@ Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by 
 
 ### Videos
 * [YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019](https://www.youtube.com/watch?v=rM495gGRTYQ "YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019")
+  * Defeating Zigbee smart locks & home alarm sensors; demonstrating effective IoT product security evaluations using ZigDiggity 2.0 - the new open-source Zigbee pentest toolkit from Bishop Fox.
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=rM495gGRTYQ
 " target="_blank"><img src="http://img.youtube.com/vi/rM495gGRTYQ/0.jpg" 
@@ -20,6 +21,15 @@ alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
 ### Slides
 * https://www.slideshare.net/bishopfox/smarter-home-invasion-with-zigdiggity
 * https://www.bishopfox.com/files/slides/2019/Black_Hat_USA_2019-Zigbee_Hacking-Smarter_Home_Invasion_with_ZigDiggity-08Aug2019-Slides.pdf
+
+### ABSTRACT:
+> Do you feel safe in your home with the security system armed? You may reconsider after watching a demo of our new hacking toolkit, ZigDiggity, where we target door & window sensors using an "ACK Attack". ZigDiggity will emerge as the weapon of choice for testing Zigbee-enabled systems, replacing all previous efforts.
+>     
+> Zigbee continues to grow in popularity as a method for providing simple wireless communication between devices (i.e. low power/traffic, short distance), & can be found in a variety of consumer products that range from smart home automation to healthcare. Security concerns introduced by these systems are just as diverse and plentiful, underscoring a need for quality assessment tools.  
+>     
+> Unfortunately, existing Zigbee hacking solutions have fallen into disrepair, having barely been maintained, let alone improved upon. Left without a practical way to evaluate the security of Zigbee networks, we've created ZigDiggity, a new open-source pentest arsenal from Bishop Fox.
+>     
+> Our DEMO-rich presentation showcases ZigDiggity's attack capabilities by pitting it against common Internet of Things (IoT) products that use Zigbee. Come experience the future of Zigbee hacking, in a talk that the New York Times will be hailing as "a veritable triumph of the human spirit." ... ya know, probably
 
 
 ## Installation
