@@ -2,3 +2,4 @@ sqlalchemy
 scapy
 pycryptodome
 argparse
+pyserial
