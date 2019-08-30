@@ -19,7 +19,7 @@ Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by 
 alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
 
 ### Slides
-* https://www.slideshare.net/bishopfox/smarter-home-invasion-with-zigdiggity
+* https://www.slideshare.net/bishopfox/smarter-home-invasion-with-zigdiggity-165606623
 * https://www.bishopfox.com/files/slides/2019/Black_Hat_USA_2019-Zigbee_Hacking-Smarter_Home_Invasion_with_ZigDiggity-08Aug2019-Slides.pdf
 
 ### ABSTRACT:
