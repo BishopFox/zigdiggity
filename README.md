@@ -9,6 +9,7 @@ Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by 
 ## 2019 - Black Hat USA 2019 & DEF CON 27 - links, slides, and videos
 * [Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019](https://www.blackhat.com/us-19/arsenal/schedule/index.html#arsenal-lab---zigbee-hacking-smarter-home-invasion-with-zigdiggity-17151 "Black Hat USA 2019 - ARSENAL LAB - ZigBee Hacking: Smarter Home Invasion with ZigDiggity - Aug 7-8, 2019")
 * https://www.defcon.org/html/defcon-27/dc-27-demolabs.html#ZigDiggity
+  * ![](images/ZigDiggity-Aug2019-DefCon27-DemoLab-1-Smaller.jpg)
 
 ### Videos
 * __NOTE (30Aug2019):  the video is temporarily unavailable, but will be back up in the next few weeks.__
