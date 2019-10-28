@@ -12,12 +12,11 @@ Introducing *ZigDiggity 2.0*, a ZigBee penetration testing framework created by 
   * ![](images/ZigDiggity-Aug2019-DefCon27-DemoLab-1-Smaller.jpg)
 
 ### Videos
-* __NOTE (30Aug2019):  the video is temporarily unavailable, but will be back up in the next few weeks.__
-* [YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019](https://www.youtube.com/watch?v=rM495gGRTYQ "YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 56sec DEMO - 20Aug2019")
+* [YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 58sec DEMO - 20Aug2019](https://www.youtube.com/watch?v=9_0SoKsVklMQ "YouTube - Zigbee Hacking: Smarter Home Invasion with ZigDiggity - 58sec DEMO - 20Aug2019")
   * Defeating Zigbee smart locks & home alarm sensors; demonstrating effective IoT product security evaluations using ZigDiggity 2.0 - the new open-source Zigbee pentest toolkit from Bishop Fox.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=rM495gGRTYQ
-" target="_blank"><img src="http://img.youtube.com/vi/rM495gGRTYQ/0.jpg" 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=9_0SoKsVklM
+" target="_blank"><img src="http://img.youtube.com/vi/9_0SoKsVklM/0.jpg" 
 alt="ZigDiggity 2019 DEMO" width="320" height="180" border="10" /></a>
 
 ### Slides
