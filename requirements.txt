@@ -3,3 +3,4 @@ scapy
 pycryptodome
 argparse
 pyserial
+hexdump

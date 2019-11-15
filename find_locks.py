@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import sys
 sys.path.append(os.getcwd() + "/zigdiggity")
@@ -16,10 +17,11 @@ from zigdiggity.misc.actions import *
 
 parser = argparse.ArgumentParser(description='Attempt to find locks on a channel')
 parser.add_argument('-c','--channel',action='store',type=int,dest='channel',required=True,help='Channel to use')
+parser.add_argument('-d','--device',action='store',dest='device',default='/dev/ttyS0',help='Zigbee Radio device')
 parser.add_argument('-w','--wireshark',action='store_true',dest='wireshark',required=False,help='See all traffic in wireshark')
 args = parser.parse_args()
 
-hardware_radio = RaspbeeRadio("/dev/ttyS0")
+hardware_radio = RaspbeeRadio(args.device)
 radio = ObserverRadio(hardware_radio)
 
 if args.wireshark:
