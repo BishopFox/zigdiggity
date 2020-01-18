@@ -32,7 +32,7 @@ if args.wireshark:
 if args.stdout:
     observer_utils.register_stdout(radio)
 
-CHANNELS = [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+CHANNELS = [11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]
 for channel in CHANNELS:
     radio.set_channel(channel)
 
