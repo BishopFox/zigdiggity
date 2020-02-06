@@ -32,7 +32,7 @@ if args.wireshark:
     wireshark = WiresharkObserver()
     radio.add_observer(wireshark)
 
-CHANNEL = args.channel
+radio.set_channel(args.channel)
 
 print_notify("Sending the beacon request")
 radio.send(beacon_request(random.randint(0,255)))
