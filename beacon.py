@@ -51,7 +51,10 @@ if args.verbose:
 
 try:
     timer = Timer(args.timeout)
-    radio.send_and_retry(beacon_request(random.randint(0,255)))
+    print(type(beacon_request()), len(beacon_request()))
+    hexdump.hexdump(bytes(beacon_request()))
+    #radio.send_and_retry(beacon_request(random.randint(0,255)))
+    radio.send(beacon_request(random.randint(0,255)))
     while not timer.has_expired():
         radio.receive()
 finally:

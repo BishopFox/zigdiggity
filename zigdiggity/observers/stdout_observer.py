@@ -9,10 +9,10 @@ from scapy.layers.zigbee import *
 DOT154_FCF_TYPE_MASK            = 0x0007  #: Frame type mask
 
 PACKET_TYPES = {
-    "0": "Beacon",     #: Beacon frame
-    "1": "Data",       #: Data frame
-    "2": "Ack",        #: Acknowledgement frame
-    "3": "Mac Cmd"     #: MAC Command frame
+    0: "Beacon",     #: Beacon frame
+    1: "Data",       #: Data frame
+    2: "Ack",        #: Acknowledgement frame
+    3: "Mac Cmd"     #: MAC Command frame
 }
 
 class StdoutObserver(Observer):
@@ -21,16 +21,16 @@ class StdoutObserver(Observer):
         pass
 
     def notify(self, channel, packet):
-        if packet == None:
+        if packet is None:
             return
+        hexdump.hexdump(bytes(packet))
 
-        fcf = struct.unpack("<H",bytes(packet)[0:2])[0] & DOT154_FCF_TYPE_MASK
-        if (str(fcf) in PACKET_TYPES):
-            print("Type:", PACKET_TYPES[str(fcf)])
+        pktType = struct.unpack("<H",bytes(packet)[0:2])[0] & DOT154_FCF_TYPE_MASK
+        if (pktType in PACKET_TYPES):
+            print("Type:", PACKET_TYPES[pktType])
         else:
             print("Type: Unknown")
 
-        hexdump.hexdump(bytes(packet))
         return
 
     def close(self):

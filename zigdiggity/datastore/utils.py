@@ -34,7 +34,7 @@ def find_device(channel, pan=None, addr=None, epan=None, eaddr=None):
             device = result.Device
         if device is not None:
             return device
-    
+
     # Last we'll use PAN/ADDR
     if pan is not None and addr is not None:
         pan_obj = database_session.query(PAN).filter_by(channel=channel, pan_id=pan).first()
@@ -42,7 +42,7 @@ def find_device(channel, pan=None, addr=None, epan=None, eaddr=None):
             device = database_session.query(Device).filter_by(pan_id=pan_obj.id, address=addr).first()
         if device is not None:
             return device
-    
+
     return None
 
 
@@ -113,7 +113,7 @@ def get_is_coordinator_by_packet(packet):
     return None
 
 def add_new_device(device):
-    if not isinstance(device Device):
+    if not isinstance(device, Device):
         return
 
     database_session.add(device)
@@ -132,7 +132,7 @@ def merge_devices(device1, device2):
 
 unknown_network = None
 
-def get_unknown_network()
+def get_unknown_network():
     global unknown_network
     if unknown_network is None:
         network = database_session.query(Network).filter_by(unknown=True)
@@ -143,7 +143,7 @@ def get_unknown_network()
         unknown_network = network
     return unknown_network
 
-def is_unknown_network(network)
+def is_unknown_network(network):
     return network.unknown
 
 def commit_changes():
